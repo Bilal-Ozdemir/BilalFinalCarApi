@@ -45,6 +45,11 @@ app.get('/', (req, res) => {
   res.send('Welcome to the Car API!');
 });
 
+app.get('/api/cars', (req, res) => {
+    const cars = readData(); 
+    res.json(cars); 
+  });
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
