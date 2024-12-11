@@ -50,6 +50,19 @@ app.get('/api/cars', (req, res) => {
     res.json(cars); 
   });
 
+
+app.get('/api/cars/:id', (req, res) => {
+    const cars = readData(); 
+    const car = cars.find((c) => c.id === parseInt(req.params.id)); 
+  
+    if (!car) {
+      return res.status(404).json({ error: 'Car not found' }); 
+    }
+  
+    res.json(car); 
+  });
+  
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
