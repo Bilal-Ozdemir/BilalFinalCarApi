@@ -61,6 +61,30 @@ app.get('/api/cars/:id', (req, res) => {
   
     res.json(car); 
   });
+
+
+app.post('/api/cars', (req, res) => {
+    const { make, model, year } = req.body;
+  
+  
+    if (!make || !model || !year) {
+      return res.status(400).json({ error: 'Make, model, and year are required' });
+    }
+  
+    const cars = readData();
+    const newCar = {
+      id: cars.length > 0 ? cars[cars.length - 1].id + 1 : 1, 
+      make,
+      model,
+      year,
+    };
+  
+    cars.push(newCar); 
+    writeData(cars); 
+  
+    res.status(201).json(newCar); 
+  });
+  
   
 
 // Start the server
