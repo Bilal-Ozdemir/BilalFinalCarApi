@@ -85,6 +85,28 @@ app.post('/api/cars', (req, res) => {
     res.status(201).json(newCar); 
   });
   
+
+app.put('/api/cars/:id', (req, res) => {
+    const { make, model, year } = req.body;
+  
+    
+    if (!make || !model || !year) {
+      return res.status(400).json({ error: 'Make, model, and year are required' });
+    }
+  
+    const cars = readData(); 
+    const carIndex = cars.findIndex((c) => c.id === parseInt(req.params.id)); 
+  
+    if (carIndex === -1) {
+      return res.status(404).json({ error: 'Car not found' }); 
+    }
+  
+   
+    cars[carIndex] = { id: parseInt(req.params.id), make, model, year };
+    writeData(cars); 
+  
+    res.json(cars[carIndex]); 
+  });
   
 
 // Start the server
