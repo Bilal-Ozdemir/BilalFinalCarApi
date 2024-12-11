@@ -109,6 +109,21 @@ app.put('/api/cars/:id', (req, res) => {
   });
   
 
+app.delete('/api/cars/:id', (req, res) => {
+    const cars = readData(); 
+    const carIndex = cars.findIndex((c) => c.id === parseInt(req.params.id)); 
+  
+    if (carIndex === -1) {
+      return res.status(404).json({ error: 'Car not found' }); 
+    }
+  
+    const deletedCar = cars.splice(carIndex, 1); 
+    writeData(cars); 
+  
+    res.json({ message: 'Car deleted successfully', car: deletedCar[0] }); 
+  });
+
+  
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
